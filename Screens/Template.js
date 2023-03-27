@@ -1,44 +1,53 @@
 import React, { useState } from "react";
-import { Alert, View, StatusBar, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, StatusBar, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 
-export default function Template() {
+export default function Template({ route, navigation }) {
 
-  const [chooseColor, setChooseColor] = useState('');
+  const { templateTitle, templateImage } = route.params;
 
-  alertUser = async () => {
-    Alert.alert("Processing");
-  }
+  const [wallColor, setWallColor] = useState('#707070');
+  const [wallFrame, setWallFrame] = useState(require('./Images/whiteframe.png'));
+  const [wallFrameSelected, setWallFrameSelected] = useState(require('./Images/selectedDouble.png'));
+  const [wallFrameUnselected, setWallFrameUnselected] = useState(require('./Images/unselectedSingle.png'));
 
-  return (
-    <View style={styles.container}>
-      <StatusBar backgroundColor="#916306" barStyle="light-content" />
-      <View style={styles.form}>
+  const [frame, setFrame] = useState('double');
+  const [picture, setPicture] = useState((templateImage));
 
-        <Text style={styles.label}>Background with 6 different colors</Text>
-        
-        <RNPickerSelect 
-          onValueChange={(chooseColor) => setChooseColor(chooseColor)}
-          items={[
-            { value: 'blue', label: 'Blue' },
-            { value: 'red', label: 'Red' },
-            { value: 'green', label: 'Green' },
-            { value: 'yellow', label: 'Yellow' },
-            { value: 'black', label: 'Black' },
-            { value: 'white', label: 'White' }        
-          ]}
-          style={styles.option}
-        />
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    setPicture((result.assets[0].uri));
+  };
 
-        <TouchableOpacity style={styles.screenButton} onPress={() => alertUser()} underlayColor='#fff'>
-          <Text style={styles.buttonText}>Choose this color</Text>
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: templateTitle,
+      headerStyle: {
+        headerTintColor: '#fff',
+        backgroundColor: '#916306',
+      },
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        padding: 15,
+      },
+      headerLeft: () => {
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Info')}
+        >
+          <Image source={require('./Images/info.png')} />
         </TouchableOpacity>
+      }
+    })
+  })
 
-      </View>
-    </View>
-  )
 }
-
 
 /*
  * Function: styles
