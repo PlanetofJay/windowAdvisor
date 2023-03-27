@@ -37,15 +37,59 @@ export default function Template({ route, navigation }) {
         fontSize: 20,
         padding: 15,
       },
-      headerLeft: () => {
+      headerLeft: () => (
         <TouchableOpacity
           onPress={() => navigation.navigate('Info')}
         >
           <Image source={require('./Images/info.png')} />
         </TouchableOpacity>
-      }
-    })
-  })
+      ),
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => alert('hello from Right Menu ')}
+        >
+          <Image source={require('./Images/send.png')} />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
+
+  const changeBackground = (e) => {
+    setWallColor(e);
+  }
+
+  const changeFrameBackground = (e) => {
+    if (e === 'white' && frame === 'double') {
+      setWallFrame(require('./Images/whiteframe.png'));
+    }
+    else if (e === 'black' && frame === 'double') {
+      setWallFrame(require('./Images/blackframe.png'));
+    }
+    else if (e === 'wood' && frame === 'double') {
+      setWallFrame(require('./Images/woodframe.png'));
+    }
+    else if (e === 'white' && frame === 'single') {
+      setWallFrame(require('./Images/singleWhiteFrame.png'));
+    }
+    else if (e === 'black' && frame === 'single') {
+      setWallFrame(require('./Images/singleBlackFrame.png'));
+    }    
+    else if (e === 'wood' && frame === 'single') {
+      setWallFrame(require('./Images/singleWoodFrame.png'));
+    }
+    else {
+      setWallFrame(require('./Images/whiteframe.png'));
+    }
+  }
+
+
+
+
+
+
+
+
+
 
 }
 
