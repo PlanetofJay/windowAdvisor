@@ -82,15 +82,23 @@ export default function Template({ route, navigation }) {
     }
   }
 
-
-
-
-
-
-
-
-
-
+  const changeFrame = (e) => {
+    if (e === 'single') {
+      setFrame('single');
+      setWallFrame(require('./Images/singleWhiteFrame.png'));
+      setWallFrameSelected(require('./Images/unselectedDouble.png'));
+      setWallFrameUnselected(require('./Images/selectedSingle.png'));
+    }
+    else if (e === 'double') {
+      setFrame('double');
+      setWallFrame(require('./Images/whiteFrame.png'));
+      setWallFrameSelected(require('./Images/selectedDouble.png'));
+      setWallFrameUnselected(require('./Images/unselectedSingle.png')); 
+    }
+    else {
+      
+    }
+  }
 }
 
 /*
@@ -111,9 +119,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
   },
+
+  wall: {
+    width: "100%",
+    height: 300,
+    marginTop: -60,
+    alignItems: 'center',
+  },
+
   label: {
     fontSize: 18,
+    marginLeft: 10,
   },
+
   logo: {
     marginTop: 80,
     width: "100%",
