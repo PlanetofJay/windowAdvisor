@@ -19,12 +19,14 @@ export default function CreateTemplate({ navigation }) {
       quality: 1,
     });
 
-    console.log(result);
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
+    setImage(result.assets[0].uri);
   };
+
+  const createTemplate = async () => {
+    Alert.alert("Template Created!");
+    navigation.navigate('Template', {templateTitle: title, templateImage: image}) 
+  };
+
 
   return (
     <View style={styles.container}>
@@ -40,7 +42,7 @@ export default function CreateTemplate({ navigation }) {
       <TouchableOpacity style = {styles.screenButton2} onPress={pickImage} underlayColor='#fff'>
         {image && <Image source={{ uri: image }} style={{ width: "100%", height: "100%" }} />}
       </TouchableOpacity>
-      <TouchableOpacity style={styles.screenButton} onPress={() => navigation.navigate('Template')} underlayColor='#fff'>
+      <TouchableOpacity style={styles.screenButton} onPress={createTemplate} underlayColor='#fff'>
           <Text style={styles.buttonText}>Create Template</Text>
        </TouchableOpacity>
       </View>
