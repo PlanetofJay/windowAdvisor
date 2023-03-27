@@ -3,8 +3,9 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, StatusBar, TextInput, 
 import * as ImagePicker from 'expo-image-picker'
 
 export default function CreateTemplate({ navigation }) {
-  [templateName, setName] = useState();
+
   const [image, setImage] = useState(null);
+  const [title, setTitle] = useState('');
 
   onChangeHandlerName = (value) => {
     setName(value);

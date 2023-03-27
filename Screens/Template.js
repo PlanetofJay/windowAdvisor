@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, StatusBar, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import RNPickerSelect from "react-native-picker-select";
+import * as ImagePicker from 'expo-image-picker';
 
 export default function Template({ route, navigation }) {
 
@@ -91,7 +91,7 @@ export default function Template({ route, navigation }) {
     }
     else if (e === 'double') {
       setFrame('double');
-      setWallFrame(require('./Images/whiteFrame.png'));
+      setWallFrame(require('./Images/whiteframe.png'));
       setWallFrameSelected(require('./Images/selectedDouble.png'));
       setWallFrameUnselected(require('./Images/unselectedSingle.png'));
     }
