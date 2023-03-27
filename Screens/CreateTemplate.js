@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, StatusBar, TextInput, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker'
 
@@ -24,7 +24,7 @@ export default function CreateTemplate({ navigation }) {
 
   const createTemplate = async () => {
     Alert.alert("Template Created!");
-    navigation.navigate('Template', {templateTitle: title, templateImage: image}) 
+    navigation.navigate('Template', { templateTitle: title, templateImage: image })
   };
 
 
@@ -32,19 +32,19 @@ export default function CreateTemplate({ navigation }) {
     <View style={styles.container}>
       <StatusBar backgroundColor="#916306" barStyle="light-content" />
       <View style={styles.form}>
-      <Text style={styles.label}>Template Name:</Text>
-      <TextInput 
-        style={styles.textInput} 
-        numberOfLines={1}
-        onChangeText={onChangeHandlerName} 
-      />
-      <Text style={styles.label}>Select An Image:</Text>
-      <TouchableOpacity style = {styles.screenButton2} onPress={pickImage} underlayColor='#fff'>
-        {image && <Image source={{ uri: image }} style={{ width: "100%", height: "100%" }} />}
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.screenButton} onPress={createTemplate} underlayColor='#fff'>
+        <Text style={styles.label}>Template Name:</Text>
+        <TextInput
+          style={styles.textInput}
+          numberOfLines={1}
+          onChangeText={onChangeHandlerName}
+        />
+        <Text style={styles.label}>Select An Image:</Text>
+        <TouchableOpacity style={styles.screenButton2} onPress={pickImage} underlayColor='#fff'>
+          {image && <Image source={{ uri: image }} style={{ width: "100%", height: "100%" }} />}
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.screenButton} onPress={createTemplate} underlayColor='#fff'>
           <Text style={styles.buttonText}>Create Template</Text>
-       </TouchableOpacity>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -57,23 +57,23 @@ export default function CreateTemplate({ navigation }) {
  */
 const styles = StyleSheet.create({
   form: {
-      margin: 30,
-      marginTop: 60,
-      backgroundColor: 'white',
-      justifyContent: 'center',
-      alignItems: 'center',  
+    margin: 30,
+    marginTop: 60,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   container: {
     backgroundColor: 'white',
     flex: 1,
   },
- 
+
   label: {
     fontSize: 18,
     marginLeft: "-50%",
 
-},
-textInput: {
+  },
+  textInput: {
     borderColor: 'black',
     borderWidth: 2,
     marginBottom: 15,
@@ -82,33 +82,33 @@ textInput: {
     textAlignVertical: 'top',
     marginTop: 10,
     width: "90%"
-},
-screenButton2:{
-  alignItems: 'center',
-  marginTop:10,
-  backgroundColor:'#7FBBFF',
-  borderRadius:10,
-  borderWidth: 1,
-  borderColor: '#fff',
-  width: "40%",
-  height: 120,
-},
-  screenButton:{
-    marginRight:40,
-    marginLeft:40,
-    marginTop:30,
-    paddingTop:12,
-    paddingBottom:12,
-    backgroundColor:'#916306',
-    borderRadius:10,
+  },
+  screenButton2: {
+    alignItems: 'center',
+    marginTop: 10,
+    backgroundColor: '#7FBBFF',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#fff',
+    width: "40%",
+    height: 120,
+  },
+  screenButton: {
+    marginRight: 40,
+    marginLeft: 40,
+    marginTop: 30,
+    paddingTop: 12,
+    paddingBottom: 12,
+    backgroundColor: '#916306',
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: '#fff',
     width: "70%",
   },
-  buttonText:{
-      color:'#fff',
-      textAlign:'center',
-      paddingLeft : 10,
-      paddingRight : 10
-  },  
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    paddingLeft: 10,
+    paddingRight: 10
+  },
 });

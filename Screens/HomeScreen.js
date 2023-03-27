@@ -10,20 +10,20 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.form}>
-      <Image
-        style={styles.logo}
-        source={require('./Images/Logo.png')}>
-      </Image>
-      <Text style={styles.label}>Welcome!</Text>
-      <TouchableOpacity style={styles.screenButton} onPress={() => navigation.navigate('CreateTemplate')} underlayColor='#fff'>
+        <Image
+          style={styles.logo}
+          source={require('./Images/Logo.png')}>
+        </Image>
+        <Text style={styles.label}>Welcome!</Text>
+        <TouchableOpacity style={styles.screenButton} onPress={() => navigation.navigate('CreateTemplate')} underlayColor='#fff'>
           <Text style={styles.buttonText}>Create Template</Text>
-       </TouchableOpacity>
-       <TouchableOpacity style={styles.screenButton} onPress={() => alertUser() } underlayColor='#fff'>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.screenButton} onPress={() => alertUser()} underlayColor='#fff'>
           <Text style={styles.buttonText}>Load Template</Text>
-       </TouchableOpacity>
-       <TouchableOpacity style={styles.screenButton} onPress={() => alertUser() } underlayColor='#fff'>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.screenButton} onPress={() => alertUser()} underlayColor='#fff'>
           <Text style={styles.buttonText}>Settings</Text>
-       </TouchableOpacity>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -36,19 +36,18 @@ export default function HomeScreen({ navigation }) {
  */
 const styles = StyleSheet.create({
   form: {
-      margin: 30,
-      marginTop: 60,
-      backgroundColor: 'white',
-      justifyContent: 'center',
-      alignItems: 'center',  
+    margin: 30,
+    marginTop: 60,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-
   container: {
     backgroundColor: 'white',
     flex: 1,
   },
   label: {
-      fontSize: 18,
+    fontSize: 18,
   },
   logo: {
     marginTop: 80,
@@ -56,22 +55,22 @@ const styles = StyleSheet.create({
     height: 160,
     alignSelf: 'center',
   },
-  screenButton:{
-    marginRight:40,
-    marginLeft:40,
-    marginTop:30,
-    paddingTop:12,
-    paddingBottom:12,
-    backgroundColor:'#916306',
-    borderRadius:10,
+  screenButton: {
+    marginRight: 40,
+    marginLeft: 40,
+    marginTop: 30,
+    paddingTop: 12,
+    paddingBottom: 12,
+    backgroundColor: '#916306',
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: '#fff',
     width: "70%",
   },
-  buttonText:{
-      color:'#fff',
-      textAlign:'center',
-      paddingLeft : 10,
-      paddingRight : 10
-  },  
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    paddingLeft: 10,
+    paddingRight: 10
+  },
 });
