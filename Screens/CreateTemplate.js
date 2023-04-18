@@ -8,7 +8,7 @@ export default function CreateTemplate({ navigation }) {
   const [title, setTitle] = useState('');
 
   onChangeHandlerName = (value) => {
-    setName(value);
+    setTitle(value);
   }
 
   const pickImage = async () => {

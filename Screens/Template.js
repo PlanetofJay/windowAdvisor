@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StatusBar, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { View, StatusBar, Text, TouchableOpacity, Image, StyleSheet, Alert } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -248,7 +248,7 @@ export default function Template({ route, navigation }) {
           <Image source={(wallFrameUnselected)} />
         </TouchableOpacity>
       </View>
-      
+
       <TouchableOpacity style={styles.screenButton3} onPress={saveTemplate} underlayColor='#fff'>
         <Text style={styles.buttonText}>Save Template</Text>
       </TouchableOpacity>
