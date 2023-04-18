@@ -2,17 +2,22 @@ import React, { useState } from "react";
 import { View, StatusBar, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as MailComposer from 'expo-mail-composer';
+import * as SMS from 'expo-sms';
+
 export default function Template({ route, navigation }) {
 
-  const { templateTitle, templateImage } = route.params;
+  const { templateTitle, templateImage, templateWallColor } = route.params;
 
-  const [wallColor, setWallColor] = useState('#707070');
+  const [wallColor, setWallColor] = useState((templateWallColor));
   const [wallFrame, setWallFrame] = useState(require('./Images/whiteframe.png'));
   const [wallFrameSelected, setWallFrameSelected] = useState(require('./Images/selectedDouble.png'));
   const [wallFrameUnselected, setWallFrameUnselected] = useState(require('./Images/unselectedSingle.png'));
 
   const [frame, setFrame] = useState('double');
   const [picture, setPicture] = useState((templateImage));
+  const [dataSubject, setDataSubject] = useState('');
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -46,7 +51,7 @@ export default function Template({ route, navigation }) {
       ),
       headerRight: () => (
         <TouchableOpacity
-          onPress={() => alert('hello from Right Menu ')}
+          onPress={() => shareTemplate()}
         >
           <Image source={require('./Images/send.png')} />
         </TouchableOpacity>
@@ -95,8 +100,75 @@ export default function Template({ route, navigation }) {
       setWallFrameSelected(require('./Images/selectedDouble.png'));
       setWallFrameUnselected(require('./Images/unselectedSingle.png'));
     }
-    else {
+    else { }
+  }
 
+  const saveTemplate = async () => {
+    await AsyncStorage.removeItem('@template');
+    await AsyncStorage.setItem('@template', JSON.stringify({ templateTitle, wallColor, frame, picture }))
+    Alert.alert("Saved the template!");
+  }
+
+  const shareTemplate = async () => {
+    Alert.alert('Please select How you would like to share', '', [
+      {
+        text: 'Email',
+        onPress: () => sendMessageWithEmail(),
+        style: 'cancel',
+      },
+      { text: 'SMS', onPress: () => sendMessageWithSMS() },
+    ]);
+  }
+
+  sendMessageWithEmail = async () => {
+
+    AsyncStorage.getItem('@subject')
+      .then((value) => {
+        const data = JSON.parse(value);
+        setDataSubject(data.subject);
+      });
+
+    const isAvailable = await MailComposer.isAvailableAsync();
+
+    if (isAvailable) {
+      var options = {
+        // Simulator must be connected to the internet in order to work!r
+        recipients: [''],
+        subject: dataSubject,
+        body: templateTitle,
+        attachments: templateImage,
+      };
+
+      MailComposer.composeAsync(options).then((result) => {
+        if (result.status === "sent") {
+          Alert.alert("Your email has been sent successfully");
+        }
+      });
+
+    }
+
+  }
+
+  sendMessageWithSMS = async () => {
+    const isAvailable = await SMS.isAvailableAsync();
+    if (isAvailable) {
+      const { result } = await SMS.sendSMSAsync(
+        ['519-871-1264'],
+        message = "" + templateTitle,
+        {
+          attachments: {
+            uri: templateImage,
+            mimeType: 'image/png',
+            filename: 'file.png',
+          },
+        }
+      );
+
+      if (result === "sent") {
+        Alert.alert("Your SMS has been sent successfully!")
+      }
+    } else {
+      console.log("SMS is not available on this device");
     }
   }
 
@@ -115,6 +187,7 @@ export default function Template({ route, navigation }) {
       </View>
 
       <Text style={styles.label}>Change background Color:</Text>
+
       <View style={{ flexDirection: "row", marginTop: 10, paddingBottom: 10 }}>
         <TouchableOpacity style={{
           marginRight: 10, marginLeft: 10, borderWidth: 1, borderColor: '#707070', height: 20, width: 20,
@@ -144,6 +217,7 @@ export default function Template({ route, navigation }) {
       </View>
 
       <Text style={styles.label}>Change frame Color:</Text>
+
       <View style={{ flexDirection: "row", marginTop: 10, paddingBottom: 10 }}>
         <TouchableOpacity style={{
           marginRight: 10, marginLeft: 10, borderWidth: 1, borderColor: '#707070', height: 20, width: 20,
@@ -163,6 +237,7 @@ export default function Template({ route, navigation }) {
       </View>
 
       <Text style={styles.label}>Select Template:</Text>
+
       <View style={{ flexDirection: "row", marginTop: 10, paddingBottom: 10 }}>
         <TouchableOpacity style={{ marginLeft: 10, marginTop: 5 }}
           onPress={() => changeFrame('double')}>
@@ -173,15 +248,18 @@ export default function Template({ route, navigation }) {
           <Image source={(wallFrameUnselected)} />
         </TouchableOpacity>
       </View>
-
-      <TouchableOpacity style={styles.screenButton3} onPress={() => alert('Template Saving In Next Sprint!')} underlayColor='#fff'>
+      
+      <TouchableOpacity style={styles.screenButton3} onPress={saveTemplate} underlayColor='#fff'>
         <Text style={styles.buttonText}>Save Template</Text>
       </TouchableOpacity>
-
+      <TouchableOpacity style={styles.screenButton3} onPress={() => navigation.navigate('Home')} underlayColor='#fff'>
+        <Text style={styles.buttonText}>Go To Home</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={{ marginTop: "-120%", marginLeft: "90%" }}
         onPress={pickImage}>
         <Image source={require('./Images/pencil.png')} />
       </TouchableOpacity>
+
     </View>
   );
 
