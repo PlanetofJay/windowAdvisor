@@ -19,13 +19,12 @@ export default function CreateTemplate({ navigation }) {
       aspect: [4, 3],
       quality: 1,
     });
-
     setImage(result.assets[0].uri);
   };
 
   const createTemplate = async () => {
     Alert.alert("Template Created!");
-    navigation.navigate('Template', { templateTitle: title, templateImage: image })
+    navigation.navigate('Template', { templateTitle: title, templateImage: image, templateWallColor: "#707070" })
   };
 
 

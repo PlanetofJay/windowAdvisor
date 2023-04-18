@@ -1,10 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function HomeScreen({ navigation }) {
 
-  alertUser = async () => {
-    Alert.alert("Load Template and Settings are unavailabe at this time!");
+  const loadTemplate = async () => {
+    AsyncStorage.getItem('@template')
+      .then((value) => {
+        const data = JSON.parse(value);
+        navigation.navigate('Template', { templateTitle: data.templateTitle, templateImage: data.picture, templateWallColor: data.wallColor })
+      });
   }
 
   return (
@@ -18,10 +23,10 @@ export default function HomeScreen({ navigation }) {
         <TouchableOpacity style={styles.screenButton} onPress={() => navigation.navigate('CreateTemplate')} underlayColor='#fff'>
           <Text style={styles.buttonText}>Create Template</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.screenButton} onPress={() => alertUser()} underlayColor='#fff'>
+        <TouchableOpacity style={styles.screenButton} onPress={() => loadTemplate()} underlayColor='#fff'>
           <Text style={styles.buttonText}>Load Template</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.screenButton} onPress={() => alertUser()} underlayColor='#fff'>
+        <TouchableOpacity style={styles.screenButton} onPress={() => navigation.navigate('Settings')} underlayColor='#fff'>
           <Text style={styles.buttonText}>Settings</Text>
         </TouchableOpacity>
       </View>
